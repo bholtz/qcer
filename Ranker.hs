@@ -5,6 +5,7 @@ import System.IO
 import Text.Regex.Posix
 import Data.List
 import Data.List.Split
+import System.Eval.Haskell
 
 -- Keywords that often signify a return value.
 -- Can update list with more synonyms as needed.
@@ -47,8 +48,8 @@ statQuickCheck :: IO ([String])
 statQuickCheck = do
   -- Generate the quickCheckResult file  
   _ <- genTestsForFile "NextPrime.hs" statTemplateFile  "IO (Result)"
---  let cmd = shell "ghc NextPrimeAutoTest.hs"
---  _ <- createProcess cmd
+  let cmd = shell "ghc NextPrimeAutoTest.hs"
+  _ <- createProcess cmd
   let run = shell "./NextPrimeAutoTest >> verboseQC.txt"
   _ <- createProcess run
   h <- openFile "verboseQC.txt" ReadMode
@@ -64,13 +65,3 @@ main = do
   hPutStrLn stderr $ show firstPris -- | Prioritize these
   _ <- statQuickCheck
   return ()
-
-
-
-{- 
-TODO
-- get stats of qucikcheckreults, generate ordered lit of props
-- make less disgusting all he createProcess
-- replace cp with correct copy/pasted NLP command because
-i am bad at copy and paste?
--}
