@@ -1,4 +1,4 @@
-import QuickChecker 
+import QuickChecker hiding (main)
 import System.Process
 import System.Posix.IO
 import System.IO
@@ -23,9 +23,7 @@ filterByAmod str =
 -- Return list of prioritized words.
 runNLP :: IO ([String])
 runNLP = do
-  let cmd = shell "java -mx150m -cp \"\" edu.stanford.nlp.parser.lexparser.LexicalizedParser \
- -outputFormat \"typedDependencies\" edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz $*"
-
+  let cmd = shell "java -mx150m -cp \"parse.txt\" edu.stanford.nlp.parser.lexparser.LexicalizedParser  -outputFormat \"typedDependencies\" edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz $*"
   _ <- createProcess cmd
   h <- openFile "parse.txt" ReadMode
   contents <- hGetContents h

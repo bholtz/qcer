@@ -98,6 +98,7 @@ genTestsForFile filename tempFileName retType = do
   hClose ht
   hClose h
   
+-- Modify as needed to get the proper database file from the proper place
 dbFile :: String
 dbFile = "/afs/ir/users/b/h/bholtz/.cabal/share/hoogle-4.2.32/databases/primes.hoo"
   
@@ -118,8 +119,8 @@ typeList :: TypeSig -> [Type]
 typeList = map trim . splitOn "->"
 
 --Comment in to run the simple quick checker
---main :: IO ()
---main = do
-  --files <- getArgs
-  --mapM_ genTestsForFile files templateFile "IO ()"
+main :: IO ()
+main = do
+  files <- getArgs
+  mapM_ (\file -> genTestsForFile file templateFile "IO ()") files
   
